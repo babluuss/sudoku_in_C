@@ -11,6 +11,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <time.h>
 
 // defined size
 # define SIZE 9
@@ -20,7 +21,10 @@ int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
 int fillGrid(int grid[SIZE][SIZE]);
 void removeCells(int grid[SIZE][SIZE], int difficulty);
 
-int chooseDificulty();
+void generateSudoku(int difficulty, int (*board)[SIZE]);
+void printGrid(int grid[SIZE][SIZE]);
+
+int chooseDifficulty();
 
 // Main
 int main(){
@@ -37,18 +41,19 @@ int main(){
     return 0;
 }
 
-int chooseDificulty(){
-    int diff;
+int chooseDifficulty(){
+    int diff = 0;
     for(;;){
         printf("Choose a difficulty:\n");
         printf("1.- Easy\n");
         printf("2.- Medium\n");
         printf("3.- Hard\n");
         scanf("%d", &diff);
-        if(diff != 1 || diff != 2 || diff != 3){
-            printf("Please enter a valid option.");
-        }else{
+
+        if(diff == 1 || diff == 2 || diff == 3){
             return diff;
+        }else{
+            printf("Please enter a valid option.");
         }
     }
 }
