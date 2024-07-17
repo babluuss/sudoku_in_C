@@ -31,7 +31,7 @@ void removeCells(int grid[SIZE][SIZE], int difficulty);
 
 void generateSudoku(int difficulty, int (*board)[SIZE]);
 
-void setColor(int color) 
+void setColor(int color);
 void printGrid(int grid[SIZE][SIZE]);
 
 int chooseDifficulty();
