@@ -167,8 +167,12 @@ void printGrid(int grid[SIZE][SIZE]) {
     // Helper function to print the generated Sudoku grid.
 
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            printf("%d ", grid[i][j]);
+        if(i % 3 == 0 && i != 0) 
+            printf("--------- --------- ---------\n");
+        for (int j = 0; j < SIZE; j++){
+            if(j % 3 == 0 && j != 0) 
+                printf("|");
+            printf(" %d ", grid[i][j]);
         }
         printf("\n");
     }
