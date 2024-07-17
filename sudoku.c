@@ -12,6 +12,8 @@
 # include <stdlib.h>
 # include <math.h>
 # include <time.h>
+#include <conio.h>
+#include <windows.h>
 
 // defined size
 # define SIZE 9
@@ -78,22 +80,9 @@ void generateSudoku(int difficulty, int (*board)[SIZE]) {
     }
 }
 
-int isSafe(int grid[SIZE][SIZE], int row, int col, int num) {
-    // Checks if placing a number in a specific cell is valid according to Sudoku rules.
-
-    for (int x = 0; x < SIZE; x++) {
-        if (grid[row][x] == num || grid[x][col] == num ||
-            grid[row - row % 3 + x / 3][col - col % 3 + x % 3] == num) {
-            return 0;
-        }
-    }
-    return 1;
-}
-
 int fillGrid(int grid[SIZE][SIZE]) {
     // Recursively fills the grid with a valid Sudoku solution.
 
-    //int row, col, num;
     for (int row = 0; row < SIZE; row++) {
         for (int col = 0; col < SIZE; col++) {
             if (grid[row][col] == 0) {
@@ -108,6 +97,18 @@ int fillGrid(int grid[SIZE][SIZE]) {
                 }
                 return 0;
             }
+        }
+    }
+    return 1;
+}
+
+int isSafe(int grid[SIZE][SIZE], int row, int col, int num) {
+    // Checks if placing a number in a specific cell is valid according to Sudoku rules.
+
+    for (int x = 0; x < SIZE; x++) {
+        if (grid[row][x] == num || grid[x][col] == num ||
+            grid[row - row % 3 + x / 3][col - col % 3 + x % 3] == num) {
+            return 0;
         }
     }
     return 1;
@@ -146,10 +147,9 @@ void removeCells(int grid[SIZE][SIZE], int difficulty) {
 void printGrid(int grid[SIZE][SIZE]) {
     // Helper function to print the generated Sudoku grid.
 
-
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            printf("%2d", grid[i][j]);
+            printf("%d ", grid[i][j]);
         }
         printf("\n");
     }
