@@ -76,7 +76,7 @@ int chooseDifficulty() {
         }
     }
 
-    return diff;
+    return diff + 1;
 }
 
 void generateSudoku(int difficulty, int (*board)[SIZE]) {
