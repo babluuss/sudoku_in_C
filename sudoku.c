@@ -58,7 +58,6 @@ int chooseDifficulty(){
     }
 }
 
-// Functions
 void generateSudoku(int difficulty, int (*board)[SIZE]) {
     // The main function that initializes the grid, fills it, and then removes cells to create the puzzle.
 
@@ -94,11 +93,11 @@ int isSafe(int grid[SIZE][SIZE], int row, int col, int num) {
 int fillGrid(int grid[SIZE][SIZE]) {
     // Recursively fills the grid with a valid Sudoku solution.
 
-    int row, col, num;
-    for (row = 0; row < SIZE; row++) {
-        for (col = 0; col < SIZE; col++) {
+    //int row, col, num;
+    for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
             if (grid[row][col] == 0) {
-                for (num = 1; num <= SIZE; num++) {
+                for (int num = 1; num <= SIZE; num++) {
                     if (isSafe(grid, row, col, num)) {
                         grid[row][col] = num;
                         if (fillGrid(grid)) {
