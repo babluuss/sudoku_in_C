@@ -23,7 +23,7 @@ To compile and run the Sudoku game, follow these steps:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/sudoku-game.git
+    git clone https://github.com/pinedah/sudoku_in_c.git
     cd sudoku-game
     ```
 
