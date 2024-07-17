@@ -49,9 +49,9 @@ int main(){
 
     generateSudoku(difficulty, board);
 
-    printGrid(board);
+    //printGrid(board);
 
-    //playGame(board);
+    playGame(board);
 
     return 0;
 }
@@ -200,42 +200,93 @@ void printGrid(int grid[SIZE][SIZE]) {
     }
 }
 
+void printGridForSelection(int grid[SIZE][SIZE], int userRow, int userCol) {
+    // Helper function to print the generated Sudoku grid.
+    system("cls");
+    printf("\n");
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Get the console output handle
+    
+
+    for (int i = 0; i < SIZE; i++) {
+        if (i % 3 == 0 && i != 0) 
+            printf("------------ ------------ ------------\n");
+        for (int j = 0; j < SIZE; j++) {
+
+            if(i == userRow && j == userCol){
+                SetConsoleTextAttribute(hConsole, 9);
+                printf(" * ");
+            }else{
+
+
+                if (j % 3 == 0 && j != 0) 
+                    printf("|");
+                // Print numbers: non-zero in green, zero in default color
+                if (grid[i][j] != 0) {
+                    setColor(10); // Set color to green
+                    printf(" %d ", grid[i][j]);
+                    setColor(7); // Reset to default color
+                } else {
+                    printf(" %d ", grid[i][j]); // Default color for 0
+                }
+            }
+            SetConsoleTextAttribute(hConsole, 0x07);
+            printf(" ");
+        }
+        printf("\n");
+    }
+}
+
 
 void playGame(int board[SIZE][SIZE]) {
-    int selectedRow = 0, selectedCol = 0;
-    int keyPressed;
+    int selectedRow = 0, selectedCol = 0, userRow = 0, userCol = 0;
+
+    char keyPressed;
 
     while (1) {
-        system("cls");
-        printGrid(board);
+        //system("cls");
+        printGridForSelection(board, userRow, userCol);
+
         printf("\nUse arrow keys to move, numbers to fill cells, and 'q' to quit.\n");
 
         keyPressed = getch();
-        if (keyPressed == 'q') {
+
+        if (keyPressed == 'q' || keyPressed == 'Q') {
             break; // Exit the game
-        } else if (keyPressed == 0 || keyPressed == 224) {
-            keyPressed = getch(); // Get actual key pressed
-            switch (keyPressed) {
-                case UP:
-                    selectedRow = (selectedRow - 1 + SIZE) % SIZE; // Move up
-                    break;
-                case DOWN:
-                    selectedRow = (selectedRow + 1) % SIZE; // Move down
-                    break;
-                case LEFT:
-                    selectedCol = (selectedCol - 1 + SIZE) % SIZE; // Move left
-                    break;
-                case RIGHT:
-                    selectedCol = (selectedCol + 1) % SIZE; // Move right
-                    break;
-            }
-        } else if (keyPressed >= '1' && keyPressed <= '9') {
+        } 
+
+        if(keyPressed >= '1' && keyPressed <= '9') {
+            
+            /*
             if (isSafe(board, selectedRow, selectedCol, keyPressed - '0')) {
                 board[selectedRow][selectedCol] = keyPressed - '0'; // Fill cell
             } else {
                 printf("Invalid move!\n");
                 getch(); // Wait for user to acknowledge
             }
+            */
+            board[userRow][userCol] = (int) keyPressed;
         }
+
+        
+        
+            //keyPressed = getch(); // Get actual key pressed
+            switch (keyPressed) {
+                case UP:
+                    userRow = (userRow - 1 + SIZE) % SIZE; // Move up
+                    break;
+                case DOWN:
+                    userRow = (userRow + 1) % SIZE; // Move down
+                    break;
+                case LEFT:
+                    userCol = (userCol - 1 + SIZE) % SIZE; // Move left
+                    break;
+                case RIGHT:
+                    userCol = (userCol + 1) % SIZE; // Move right
+                    break;
+                default:
+                    break;
+            }
+        
     }
 }
