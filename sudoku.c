@@ -30,6 +30,8 @@ int fillGrid(int grid[SIZE][SIZE]);
 void removeCells(int grid[SIZE][SIZE], int difficulty);
 
 void generateSudoku(int difficulty, int (*board)[SIZE]);
+
+void setColor(int color) 
 void printGrid(int grid[SIZE][SIZE]);
 
 int chooseDifficulty();
@@ -170,22 +172,6 @@ void removeCells(int grid[SIZE][SIZE], int difficulty) {
     }
 }
 
-/*
-void printGrid(int grid[SIZE][SIZE]) {
-    // Helper function to print the generated Sudoku grid.
-
-    for (int i = 0; i < SIZE; i++) {
-        if(i % 3 == 0 && i != 0) 
-            printf("--------- --------- ---------\n");
-        for (int j = 0; j < SIZE; j++){
-            if(j % 3 == 0 && j != 0) 
-                printf("|");
-            printf(" %d ", grid[i][j]);
-        }
-        printf("\n");
-    }
-}
-*/
 void setColor(int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
