@@ -18,6 +18,10 @@
 // defined size
 # define SIZE 9
 
+#define ENTER 13
+#define UP 72
+#define DOWN 80
+
 // Prototipe of functions
 int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
 int fillGrid(int grid[SIZE][SIZE]);
@@ -43,21 +47,36 @@ int main(){
     return 0;
 }
 
-int chooseDifficulty(){
-    int diff = 0;
-    for(;;){
-        printf("Choose a difficulty:\n");
-        printf("1.- Easy\n");
-        printf("2.- Medium\n");
-        printf("3.- Hard\n");
-        scanf("%d", &diff);
+int chooseDifficulty() {
+    int keyPressed, diff = 0; // 0: Easy, 1: Medium, 2: Hard
 
-        if(diff == 1 || diff == 2 || diff == 3){
-            return diff;
-        }else{
-            printf("Please enter a valid option.");
+    system("cls");
+
+    printf("Choose a difficulty:\n");
+    printf("\t\tEasy\n");
+    printf("\t\tMedium\n");
+    printf("\t\tHard\n");
+
+    while ((keyPressed = getch()) != ENTER) {
+        if (keyPressed == 0 || keyPressed == 224) {
+            keyPressed = getch(); // Get the actual key pressed
+            switch (keyPressed) {
+            case UP:
+                diff = (diff - 1 + 3) % 3; // Move up in the selection
+                break;
+            case DOWN:
+                diff = (diff + 1) % 3; // Move down in the selection
+                break;
+            }
+            system("cls");
+            printf("Choose a difficulty:\n");
+            printf("%s\tEasy\n", (diff == 0) ? "->" : "\t");
+            printf("%s\tMedium\n", (diff == 1) ? "->" : "\t");
+            printf("%s\tHard\n", (diff == 2) ? "->" : "\t");
         }
     }
+
+    return diff;
 }
 
 void generateSudoku(int difficulty, int (*board)[SIZE]) {
