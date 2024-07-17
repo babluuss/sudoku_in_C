@@ -20,17 +20,37 @@ int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
 int fillGrid(int grid[SIZE][SIZE]);
 void removeCells(int grid[SIZE][SIZE], int difficulty);
 
+int chooseDificulty();
+
 // Main
 int main(){
     srand(time(0));
 
     int board[SIZE][SIZE];
-    int difficulty = 2; // Medium difficulty
+    
+    // Choose difficulty 
+    int difficulty = chooseDifficulty();
 
     generateSudoku(difficulty, board);
     printGrid(board);
 
     return 0;
+}
+
+int chooseDificulty(){
+    int diff;
+    for(;;){
+        printf("Choose a difficulty:\n");
+        printf("1.- Easy\n");
+        printf("2.- Medium\n");
+        printf("3.- Hard\n");
+        scanf("%d", &diff);
+        if(diff != 1 || diff != 2 || diff != 3){
+            printf("Please enter a valid option.");
+        }else{
+            return diff;
+        }
+    }
 }
 
 // Functions
