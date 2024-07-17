@@ -37,6 +37,29 @@ To compile and run the Sudoku game, follow these steps:
     ./sudoku
     ```
 
+## References for Sudoku Generation Algorithm
+
+The algorithm provided for generating a Sudoku grid involves several well-known concepts and techniques commonly used in Sudoku puzzle generation and solving. Here are the main concepts and some references:
+
+1. **Backtracking Algorithm**:
+   - The `fillGrid` function uses a backtracking algorithm to fill the grid with a valid Sudoku solution. Backtracking is a general algorithm for finding all (or some) solutions to computational problems, notably used in constraint satisfaction problems like Sudoku.
+   - Reference: ["Backtracking" on Wikipedia](https://en.wikipedia.org/wiki/Backtracking)
+
+2. **Constraint Propagation**:
+   - The `isSafe` function checks if placing a number violates any Sudoku rules. This is a form of constraint propagation, ensuring that constraints (rules) are satisfied.
+   - Reference: ["Constraint satisfaction problem" on Wikipedia](https://en.wikipedia.org/wiki/Constraint_satisfaction_problem)
+
+3. **Randomization**:
+   - The grid is filled with random numbers from 1 to 9, and cells are removed randomly to create the puzzle. Randomization helps in generating different puzzles each time.
+   - Reference: ["Sudoku" on Wikipedia, especially the "Construction" section](https://en.wikipedia.org/wiki/Sudoku#Construction)
+
+4. **Sudoku Puzzle Difficulty**:
+   - The number of cells removed to set the difficulty level of the puzzle is based on typical practices in Sudoku puzzle creation. More cells removed generally means a higher difficulty level.
+   - Reference: ["Sudoku" on Wikipedia, particularly the sections discussing puzzle generation and difficulty](https://en.wikipedia.org/wiki/Sudoku)
+
+These references provide a comprehensive background on the techniques and concepts used in the provided algorithm for generating a Sudoku grid with varying difficulty levels.
+
+
 ## Note
 
 I built this Sudoku game because I saw my girlfriend, Fatima Nava, playing it once and told her I could build it. This project is dedicated to her and her love for Sudoku.
