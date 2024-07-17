@@ -1,6 +1,6 @@
 
 /*
-    Description:
+    Description: A simple Sudoku game that allows users to generate and play Sudoku puzzles.
     Author:
     License:
     
@@ -21,6 +21,8 @@
 #define ENTER 13
 #define UP 72
 #define DOWN 80
+#define LEFT 75
+#define RIGHT 77
 
 // Prototipe of functions
 int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
@@ -32,6 +34,8 @@ void printGrid(int grid[SIZE][SIZE]);
 
 int chooseDifficulty();
 
+void playGame(int board[SIZE][SIZE]);
+
 // Main
 int main(){
     srand(time(0));
@@ -42,7 +46,8 @@ int main(){
     int difficulty = chooseDifficulty();
 
     generateSudoku(difficulty, board);
-    printGrid(board);
+
+    playGame(board);
 
     return 0;
 }
@@ -175,5 +180,44 @@ void printGrid(int grid[SIZE][SIZE]) {
             printf(" %d ", grid[i][j]);
         }
         printf("\n");
+    }
+}
+
+void playGame(int board[SIZE][SIZE]) {
+    int selectedRow = 0, selectedCol = 0;
+    int keyPressed;
+
+    while (1) {
+        system("cls");
+        printGrid(board);
+        printf("\nUse arrow keys to move, numbers to fill cells, and 'q' to quit.\n");
+
+        keyPressed = getch();
+        if (keyPressed == 'q') {
+            break; // Exit the game
+        } else if (keyPressed == 0 || keyPressed == 224) {
+            keyPressed = getch(); // Get actual key pressed
+            switch (keyPressed) {
+                case UP:
+                    selectedRow = (selectedRow - 1 + SIZE) % SIZE; // Move up
+                    break;
+                case DOWN:
+                    selectedRow = (selectedRow + 1) % SIZE; // Move down
+                    break;
+                case LEFT:
+                    selectedCol = (selectedCol - 1 + SIZE) % SIZE; // Move left
+                    break;
+                case RIGHT:
+                    selectedCol = (selectedCol + 1) % SIZE; // Move right
+                    break;
+            }
+        } else if (keyPressed >= '1' && keyPressed <= '9') {
+            if (isSafe(board, selectedRow, selectedCol, keyPressed - '0')) {
+                board[selectedRow][selectedCol] = keyPressed - '0'; // Fill cell
+            } else {
+                printf("Invalid move!\n");
+                getch(); // Wait for user to acknowledge
+            }
+        }
     }
 }
