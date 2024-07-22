@@ -203,43 +203,35 @@ void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE]){
     }
 }
 
-void printGridForSelection(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE], int userRow, int userCol)
-{
+void printGridForSelection(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE], int userRow, int userCol){
     // Helper function to print the generated Sudoku grid with selection highlighting.
     system("cls");
     printf("\n");
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Get the console output handle
 
-    for (int i = 0; i < SIZE; i++)
-    {
+    for (int i = 0; i < SIZE; i++){
         if (i % 3 == 0 && i != 0)
             printf("------------ ------------ ------------\n");
-        for (int j = 0; j < SIZE; j++)
-        {
+        for (int j = 0; j < SIZE; j++){
             if (j % 3 == 0 && j != 0)
                 printf("|");
-            if (i == userRow && j == userCol)
-            {
+            if (i == userRow && j == userCol){
                 SetConsoleTextAttribute(hConsole, 9);
                 printf(" * ");
-            }
-            else
-            {
+            }else{
                 // Print numbers: non-zero in green or red, zero in default color
-                if (grid[i][j] != 0)
-                {
+                if (grid[i][j] != 0){
                     if (fixedCells[i][j])
                         setColor(10); // Set color to green for fixed cells
                     else
                         setColor(12); // Set color to red for user inputs
+                    
                     printf(" %d ", grid[i][j]);
                     setColor(7); // Reset to default color
-                }
-                else
-                {
+                }else
                     printf(" 0 "); // Default color for 0
-                }
+                
             }
             SetConsoleTextAttribute(hConsole, 0x07);
             printf(" ");
