@@ -24,21 +24,16 @@
 #define RIGHT 77
 
 // Prototype of functions
-int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
-int fillGrid(int grid[SIZE][SIZE]);
-void removeCells(int grid[SIZE][SIZE], int difficulty);
-
+int chooseDifficulty();
 void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE]);
-
+int fillGrid(int grid[SIZE][SIZE]);
+int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
+void removeCells(int grid[SIZE][SIZE], int difficulty);
 void setColor(int color);
 void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE]);
-
-int chooseDifficulty();
-
 void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE]);
-
-int isValidSudoku(int board[SIZE][SIZE]);
 int isBoardComplete(int board[SIZE][SIZE]);
+int isValidSudoku(int board[SIZE][SIZE]);
 
 // Main
 int main()
@@ -339,8 +334,8 @@ int isBoardComplete(int board[SIZE][SIZE])
     return 1; // Return true if all cells are filled
 }
 
-int isValidSudoku(int board[SIZE][SIZE])
-{
+int isValidSudoku(int board[SIZE][SIZE]){
+    
     int row[SIZE][SIZE] = {0};
     int col[SIZE][SIZE] = {0};
     int subgrid[SIZE][SIZE] = {0};
