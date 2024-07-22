@@ -36,9 +36,8 @@ int isBoardComplete(int board[SIZE][SIZE]);
 int isValidSudoku(int board[SIZE][SIZE]);
 
 // Main
-int main()
-{
-    srand(time(0));
+int main(){ 
+    srand(time(0)); // for random numbers
 
     int board[SIZE][SIZE];
     int fixedCells[SIZE][SIZE] = {0}; // Array to track fixed cells
@@ -46,16 +45,17 @@ int main()
     // Choose difficulty
     int difficulty = chooseDifficulty();
 
+    // Generate random sudoku game based on the difficulty chosen
     generateSudoku(difficulty, board, fixedCells);
 
+    // Start game
     playGame(board, fixedCells);
 
     return 0;
 }
 
-int chooseDifficulty()
-{
-    int keyPressed, diff = 0; // 0: Easy, 1: Medium, 2: Hard
+int chooseDifficulty(){
+    int keyPressed, diff = 0; 
 
     system("cls");
 
@@ -64,19 +64,16 @@ int chooseDifficulty()
     printf("\t\tMedium\n");
     printf("\t\tHard\n");
 
-    while ((keyPressed = getch()) != ENTER)
-    {
-        if (keyPressed == 0 || keyPressed == 224)
-        {
+    while ((keyPressed = getch()) != ENTER){
+        if (keyPressed == 0 || keyPressed == 224){ // Look for special keys
             keyPressed = getch(); // Get the actual key pressed
-            switch (keyPressed)
-            {
-            case UP:
-                diff = (diff - 1 + 3) % 3; // Move up in the selection
-                break;
-            case DOWN:
-                diff = (diff + 1) % 3; // Move down in the selection
-                break;
+            switch (keyPressed){
+                case UP:
+                    diff = (diff - 1 + 3) % 3; // Move up in the selection
+                    break;
+                case DOWN:
+                    diff = (diff + 1) % 3; // Move down in the selection
+                    break;
             }
             system("cls");
             printf("Choose a difficulty:\n");
@@ -85,7 +82,6 @@ int chooseDifficulty()
             printf("%s\tHard\n", (diff == 2) ? "->" : "\t");
         }
     }
-
     return diff + 1;
 }
 
