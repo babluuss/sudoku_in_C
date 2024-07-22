@@ -108,8 +108,7 @@ void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE])
     }
 }
 
-int fillGrid(int grid[SIZE][SIZE])
-{
+int fillGrid(int grid[SIZE][SIZE]){
     // Recursively fills the grid with a valid Sudoku solution.
 
     for (int row = 0; row < SIZE; row++){
