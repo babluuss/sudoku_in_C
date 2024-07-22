@@ -1,6 +1,7 @@
-# Sudoku Game in C
+# Sudoku Game in C (Playable with the keyboard!)
 
 Welcome to the Sudoku Game repository! This project is a simple yet challenging Sudoku game built entirely in the C programming language. The game offers three difficulty levels, allowing players to choose their preferred level of challenge.
+
 
 ## Sudoku Rules
 
