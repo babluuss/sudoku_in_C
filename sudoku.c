@@ -240,14 +240,11 @@ void printGridForSelection(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE], int
     }
 }
 
-void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE])
-{
+void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE]){
     int selectedRow = 0, selectedCol = 0, userRow = 0, userCol = 0;
-
     char keyPressed;
 
-    while (1)
-    {
+    while (1){
         system("cls");
         printGridForSelection(board, fixedCells, userRow, userCol);
 
@@ -256,57 +253,49 @@ void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE])
         keyPressed = getch();
 
         if (keyPressed == 'q' || keyPressed == 'Q')
-        {
             break; // Exit the game
-        }
-
-        if (keyPressed >= '1' && keyPressed <= '9')
-        {
-            if (!fixedCells[userRow][userCol]) // Only allow changes to non-fixed cells
-            {
+        
+        if (keyPressed >= '1' && keyPressed <= '9'){
+            if (!fixedCells[userRow][userCol]){ // Only allow changes to non-fixed cells
+                
                 board[userRow][userCol] = keyPressed - '0';
 
                 // Check if the entire board is valid and complete
-                if (isValidSudoku(board))
-                {
+                if (isValidSudoku(board)){
                     printGrid(board, fixedCells);
                     printf("Congratulations! You've solved the Sudoku puzzle!\n");
-                    getch(); // Wait for user to acknowledge
+                    getch(); // Wait for user to celebrate
                     break; // Exit the game
                 }
             }
         }
 
-        switch (keyPressed)
-        {
-        case UP:
-            userRow = (userRow - 1 + SIZE) % SIZE; // Move up
-            break;
-        case DOWN:
-            userRow = (userRow + 1) % SIZE; // Move down
-            break;
-        case LEFT:
-            userCol = (userCol - 1 + SIZE) % SIZE; // Move left
-            break;
-        case RIGHT:
-            userCol = (userCol + 1) % SIZE; // Move right
-            break;
-        default:
-            break;
+        // Use arrows to move on the grid
+        switch (keyPressed){
+            case UP:
+                userRow = (userRow - 1 + SIZE) % SIZE; // Move up
+                break;
+            case DOWN:
+                userRow = (userRow + 1) % SIZE; // Move down
+                break;
+            case LEFT:
+                userCol = (userCol - 1 + SIZE) % SIZE; // Move left
+                break;
+            case RIGHT:
+                userCol = (userCol + 1) % SIZE; // Move right
+                break;
+            default:
+                break;
         }
     }
 }
 
-int isBoardComplete(int board[SIZE][SIZE])
-{
+int isBoardComplete(int board[SIZE][SIZE]){
     for (int i = 0; i < SIZE; i++)
-    {
         for (int j = 0; j < SIZE; j++)
-        {
             if (board[i][j] == 0)
                 return 0; // Return false if there is any empty cell
-        }
-    }
+    
     return 1; // Return true if all cells are filled
 }
 
