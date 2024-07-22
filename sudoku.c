@@ -175,33 +175,29 @@ void setColor(int color){
     SetConsoleTextAttribute(hConsole, color);
 }
 
-void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE])
-{
+void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE]){
     // Helper function to print the generated Sudoku grid.
     printf("\n");
 
-    for (int i = 0; i < SIZE; i++)
-    {
+    for (int i = 0; i < SIZE; i++){
         if (i % 3 == 0 && i != 0)
             printf("--------- --------- ---------\n");
-        for (int j = 0; j < SIZE; j++)
-        {
+        for (int j = 0; j < SIZE; j++){
             if (j % 3 == 0 && j != 0)
                 printf("|");
+
             // Print numbers: non-zero in green, zero in default color
-            if (grid[i][j] != 0)
-            {
+            if (grid[i][j] != 0){
                 if (fixedCells[i][j])
                     setColor(10); // Set color to green for fixed cells
                 else
                     setColor(12); // Set color to red for user inputs
+                
                 printf(" %d ", grid[i][j]);
                 setColor(7); // Reset to default color
-            }
-            else
-            {
+            }else
                 printf(" 0 "); // Default color for 0
-            }
+            
         }
         printf("\n");
     }
