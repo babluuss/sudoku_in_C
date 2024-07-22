@@ -1,9 +1,9 @@
 /*
     Description: A simple Sudoku game that allows users to generate and play Sudoku puzzles.
-    Author:
-    License:
+    Author: Pinedah
+    License: MIT License - Copyright (c) 2021 Hua-Ming Huang
 
-    Inspiration:
+    Inspiration: fxna
 */
 
 // Libraries and necessary includes
