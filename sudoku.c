@@ -85,8 +85,7 @@ int chooseDifficulty(){
     return diff + 1;
 }
 
-void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE])
-{
+void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE]){
     // The main function that initializes the grid, fills it, and then removes cells to create the puzzle.
 
     // Initialize grid
