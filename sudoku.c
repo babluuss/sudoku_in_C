@@ -1,4 +1,3 @@
-
 /*
     Description: A simple Sudoku game that allows users to generate and play Sudoku puzzles.
     Author:
@@ -7,7 +6,7 @@
     Inspiration:
 */
 
-// Libraries and neccesary includes
+// Libraries and necessary includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -24,19 +23,22 @@
 #define LEFT 75
 #define RIGHT 77
 
-// Prototipe of functions
+// Prototype of functions
 int isSafe(int grid[SIZE][SIZE], int row, int col, int num);
 int fillGrid(int grid[SIZE][SIZE]);
 void removeCells(int grid[SIZE][SIZE], int difficulty);
 
-void generateSudoku(int difficulty, int (*board)[SIZE]);
+void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE]);
 
 void setColor(int color);
-void printGrid(int grid[SIZE][SIZE]);
+void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE]);
 
 int chooseDifficulty();
 
-void playGame(int board[SIZE][SIZE]);
+void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE]);
+
+int isValidSudoku(int board[SIZE][SIZE]);
+int isBoardComplete(int board[SIZE][SIZE]);
 
 // Main
 int main()
@@ -44,15 +46,14 @@ int main()
     srand(time(0));
 
     int board[SIZE][SIZE];
+    int fixedCells[SIZE][SIZE] = {0}; // Array to track fixed cells
 
     // Choose difficulty
     int difficulty = chooseDifficulty();
 
-    generateSudoku(difficulty, board);
+    generateSudoku(difficulty, board, fixedCells);
 
-    // printGrid(board);
-
-    playGame(board);
+    playGame(board, fixedCells);
 
     return 0;
 }
@@ -93,7 +94,7 @@ int chooseDifficulty()
     return diff + 1;
 }
 
-void generateSudoku(int difficulty, int (*board)[SIZE])
+void generateSudoku(int difficulty, int (*board)[SIZE], int (*fixedCells)[SIZE])
 {
     // The main function that initializes the grid, fills it, and then removes cells to create the puzzle.
 
@@ -106,10 +107,13 @@ void generateSudoku(int difficulty, int (*board)[SIZE])
     // Remove cells based on difficulty
     removeCells(grid, difficulty);
 
-    // Copy the grid to the board
+    // Copy the grid to the board and mark fixed cells
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++){
             board[i][j] = grid[i][j];
+            if (grid[i][j] != 0) {
+                fixedCells[i][j] = 1; // Mark as a fixed cell
+            }
         }
     }
 }
@@ -188,7 +192,7 @@ void setColor(int color)
     SetConsoleTextAttribute(hConsole, color);
 }
 
-void printGrid(int grid[SIZE][SIZE])
+void printGrid(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE])
 {
     // Helper function to print the generated Sudoku grid.
     printf("\n");
@@ -204,46 +208,58 @@ void printGrid(int grid[SIZE][SIZE])
             // Print numbers: non-zero in green, zero in default color
             if (grid[i][j] != 0)
             {
-                setColor(10); // Set color to green
+                if (fixedCells[i][j])
+                    setColor(10); // Set color to green for fixed cells
+                else
+                    setColor(12); // Set color to red for user inputs
                 printf(" %d ", grid[i][j]);
                 setColor(7); // Reset to default color
             }
             else
             {
-                printf(" %d ", grid[i][j]); // Default color for 0
+                printf(" 0 "); // Default color for 0
             }
         }
         printf("\n");
     }
 }
 
-void printGridForSelection(int grid[SIZE][SIZE], int userRow, int userCol){
-    // Helper function to print the generated Sudoku grid.
-     system("cls");
+void printGridForSelection(int grid[SIZE][SIZE], int fixedCells[SIZE][SIZE], int userRow, int userCol)
+{
+    // Helper function to print the generated Sudoku grid with selection highlighting.
+    system("cls");
     printf("\n");
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Get the console output handle
 
-    for (int i = 0; i < SIZE; i++){
+    for (int i = 0; i < SIZE; i++)
+    {
         if (i % 3 == 0 && i != 0)
             printf("------------ ------------ ------------\n");
-        for (int j = 0; j < SIZE; j++){
-            if (i == userRow && j == userCol){
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (j % 3 == 0 && j != 0)
+                printf("|");
+            if (i == userRow && j == userCol)
+            {
                 SetConsoleTextAttribute(hConsole, 9);
                 printf(" * ");
             }
-            else{
-
-                if (j % 3 == 0 && j != 0)
-                    printf("|");
-                // Print numbers: non-zero in green, zero in default color
-                if (grid[i][j] != 0){
-                    setColor(10); // Set color to green
+            else
+            {
+                // Print numbers: non-zero in green or red, zero in default color
+                if (grid[i][j] != 0)
+                {
+                    if (fixedCells[i][j])
+                        setColor(10); // Set color to green for fixed cells
+                    else
+                        setColor(12); // Set color to red for user inputs
                     printf(" %d ", grid[i][j]);
                     setColor(7); // Reset to default color
                 }
-                else{
-                    printf(" %d ", grid[i][j]); // Default color for 0
+                else
+                {
+                    printf(" 0 "); // Default color for 0
                 }
             }
             SetConsoleTextAttribute(hConsole, 0x07);
@@ -253,7 +269,7 @@ void printGridForSelection(int grid[SIZE][SIZE], int userRow, int userCol){
     }
 }
 
-void playGame(int board[SIZE][SIZE])
+void playGame(int board[SIZE][SIZE], int fixedCells[SIZE][SIZE])
 {
     int selectedRow = 0, selectedCol = 0, userRow = 0, userCol = 0;
 
@@ -261,8 +277,8 @@ void playGame(int board[SIZE][SIZE])
 
     while (1)
     {
-        // system("cls");
-        printGridForSelection(board, userRow, userCol);
+        system("cls");
+        printGridForSelection(board, fixedCells, userRow, userCol);
 
         printf("\nUse arrow keys to move, numbers to fill cells, and 'q' to quit.\n");
 
@@ -275,21 +291,23 @@ void playGame(int board[SIZE][SIZE])
 
         if (keyPressed >= '1' && keyPressed <= '9')
         {
+            if (!fixedCells[userRow][userCol]) // Only allow changes to non-fixed cells
+            {
+                board[userRow][userCol] = keyPressed - '0';
 
-            /*
-            if (isSafe(board, selectedRow, selectedCol, keyPressed - '0')) {
-                board[selectedRow][selectedCol] = keyPressed - '0'; // Fill cell
-            } else {
-                printf("Invalid move!\n");
-                getch(); // Wait for user to acknowledge
+                // Check if the entire board is valid and complete
+                if (isValidSudoku(board))
+                {
+                    printGrid(board, fixedCells);
+                    printf("Congratulations! You've solved the Sudoku puzzle!\n");
+                    getch(); // Wait for user to acknowledge
+                    break; // Exit the game
+                }
             }
-            */
-            board[userRow][userCol] = (int)keyPressed;
         }
-        // some
 
-        // keyPressed = getch(); // Get actual key pressed
-        switch (keyPressed){
+        switch (keyPressed)
+        {
         case UP:
             userRow = (userRow - 1 + SIZE) % SIZE; // Move up
             break;
@@ -306,4 +324,58 @@ void playGame(int board[SIZE][SIZE])
             break;
         }
     }
+}
+
+int isBoardComplete(int board[SIZE][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (board[i][j] == 0)
+                return 0; // Return false if there is any empty cell
+        }
+    }
+    return 1; // Return true if all cells are filled
+}
+
+int isValidSudoku(int board[SIZE][SIZE])
+{
+    int row[SIZE][SIZE] = {0};
+    int col[SIZE][SIZE] = {0};
+    int subgrid[SIZE][SIZE] = {0};
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            int num = board[i][j];
+            if (num != 0)
+            {
+                num--; // Decrease num to use as index (0-8 instead of 1-9)
+
+                // Check row
+                if (row[i][num])
+                    return 0;
+                row[i][num] = 1;
+
+                // Check column
+                if (col[j][num])
+                    return 0;
+                col[j][num] = 1;
+
+                // Check 3x3 sub-grid
+                int subgridIndex = (i / 3) * 3 + j / 3;
+                if (subgrid[subgridIndex][num])
+                    return 0;
+                subgrid[subgridIndex][num] = 1;
+            }
+        }
+    }
+
+    // Check if the board is completely filled
+    if (!isBoardComplete(board))
+        return 0;
+
+    return 1;
 }
