@@ -305,13 +305,13 @@ int isValidSudoku(int board[SIZE][SIZE]){
     int col[SIZE][SIZE] = {0};
     int subgrid[SIZE][SIZE] = {0};
 
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
+    for (int i = 0; i < SIZE; i++){
+
+        for (int j = 0; j < SIZE; j++){
             int num = board[i][j];
-            if (num != 0)
-            {
+
+            if (num != 0){
+
                 num--; // Decrease num to use as index (0-8 instead of 1-9)
 
                 // Check row
