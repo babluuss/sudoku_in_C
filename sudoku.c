@@ -129,8 +129,7 @@ int fillGrid(int grid[SIZE][SIZE]){
     return 1;
 }
 
-int isSafe(int grid[SIZE][SIZE], int row, int col, int num)
-{
+int isSafe(int grid[SIZE][SIZE], int row, int col, int num){
     // Checks if placing a number in a specific cell is valid according to Sudoku rules.
 
     for (int x = 0; x < SIZE; x++){
@@ -141,42 +140,37 @@ int isSafe(int grid[SIZE][SIZE], int row, int col, int num)
     return 1;
 }
 
-void removeCells(int grid[SIZE][SIZE], int difficulty)
-{
+void removeCells(int grid[SIZE][SIZE], int difficulty){
     // Removes cells from the grid based on the chosen difficulty level (easy, medium, or hard).
 
     int cellsToRemove;
 
-    switch (difficulty)
-    {
-    case 1:
-        cellsToRemove = 20; // Easy
-        break;
-    case 2:
-        cellsToRemove = 40; // Medium
-        break;
-    case 3:
-        cellsToRemove = 60; // Hard
-        break;
-    default:
-        cellsToRemove = 20; // Default to easy
+    switch (difficulty){
+        case 1:
+            cellsToRemove = 20; // Easy
+            break;
+        case 2:
+            cellsToRemove = 40; // Medium
+            break;
+        case 3:
+            cellsToRemove = 60; // Hard
+            break;
+        default:
+            cellsToRemove = 20; // Default to easy
     }
 
-    while (cellsToRemove > 0)
-    {
+    while (cellsToRemove > 0){
         int cellId = rand() % (SIZE * SIZE);
         int row = cellId / SIZE;
         int col = cellId % SIZE;
-        if (grid[row][col] != 0)
-        {
+        if (grid[row][col] != 0){
             grid[row][col] = 0;
             cellsToRemove--;
         }
     }
 }
 
-void setColor(int color)
-{
+void setColor(int color){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 }
