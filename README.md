@@ -63,7 +63,7 @@ These references provide a comprehensive background on the techniques and concep
 
 ## Note
 
-I built this Sudoku game because I saw my girlfriend, Fatima Nava, playing it once and told her I could build it. This project is dedicated to her and her love for Sudoku.
+I built this Sudoku game because I saw my girl, playing it once and told her I could build it. This project is dedicated to her and her love for Sudoku.
 
 Enjoy the game!
 
