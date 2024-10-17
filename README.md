@@ -6,7 +6,7 @@ Weo the Sudoku Game repository! This project is a simple yet challenging Sudoku 
 ## Sudoku Rules
 
 Sudoku is a logic-based, combinatorial number-placement puzzle. The objective is to fill a 9x9 grid with digits so that each column, each row, and each of the nine 3x3 subgrids (also called "boxes") contain all of the digits from 1 to 9. The puzzle starts with some cells already filled in, and the difficulty of the puzzle depends on the number of cells initially filled and their a
-### Basic Rules:
+### Ba
 1. Each row must contain the digits 1 to 9 without repetition.
 2. Each column must contain the digits 1 to 9 without repetition.
 3. Each of the nine 3x3 subgrids must contain the digits 1 to 9 without repetition.
